@@ -1,0 +1,478 @@
+<!doctype html>
+<html prefix="og: http://ogp.me/ns#">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="copyright" content="Matthew Weier O'Phinney" />
+  <meta name="author" content="Matthew Weier O'Phinney" />
+
+  <title>mwop.net :: TailwindCSS Tips</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="twitter:site" content="@mwop">
+
+    <meta name="theme-color" content="#018401">
+  <meta name="msapplication-TileColor" content="#ffffff">
+
+    <link rel="manifest" href="/manifest.json">
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/images/favicon/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/images/favicon/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/images/favicon/apple-touch-icon-72x72.png">
+  <link rel="icon" type="image/png" href="/images/favicon/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/images/favicon/favicon-16x16.png" sizes="16x16">
+    <link rel="me" href="https://phpc.social/@mwop" title="@mwop@phpc.social">
+  <link rel="me" href="https://github.com/weierophinney" title="GitHub">
+  <link rel="me" href="https://keybase.io/mwop" title="Keybase">
+  <link rel="me" href="https://www.facebook.com/mweierophinney/" title="Facebook">
+  <link rel="me" href="https://www.linkedin.com/in/mweierophinney/" title="LinkedIn">
+    <meta name="p:domain_verify" content="9b04eb60badd6fcae26c49cc585a9b10"/>
+<link href="/assets/css/site.css?v=20240823T083328" media="screen" rel="stylesheet" type="text/css">
+  <link href="/blog/rss.xml" rel="alternate" type="application/rss+xml" title="phly, boy, phly RSS Feed">
+  <link href="/blog/atom.xml" rel="alternate" type="application/atom+xml" title="phly, boy, phly Atom Feed">
+      <!-- OpenGraph -->
+    <link rel="canonical" href="/blog/2022-04-26-tailwind.html" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:creator" content="@mwop" />
+    <meta property="og:site_name" content="mwop.net" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="TailwindCSS&#x20;Tips" />
+    <meta property="og:url" content="/blog/2022-04-26-tailwind.html" />
+    <meta property="og:image" content="/images/tailwindcss.svg" />
+    <meta property="og:image:alt" content="&#x27;TailwindCSS&#x27;&#x20;by&#x20;Tailwind&#x20;Labs&#x20;Inc.&#x3B;&#x20;licensed&#x20;under&#x20;PROPRIETARY" />
+    <meta property="article:published_time" content="2022-04-26T14:15:00-05:00" />
+    <meta property="article:modified_time" content="2022-04-26T14:15:00-05:00" />
+        <meta property="article:tag" content="css" />
+        <meta property="article:tag" content="php" />
+        <meta property="article:tag" content="tailwind" />
+        <meta property="article:tag" content="tailwindcss" />
+        <!-- Feeds -->
+    <link href="/blog/tag/css/rss.xml" rel="alternate" type="application/rss+xml" title="mwop.net RSS Feed for css">
+    <link href="/blog/tag/css/atom.xml" rel="alternate" type="application/rss+xml" title="mwop.net RSS Feed for css">
+    <!-- Feeds -->
+    <link href="/blog/tag/php/rss.xml" rel="alternate" type="application/rss+xml" title="mwop.net RSS Feed for php">
+    <link href="/blog/tag/php/atom.xml" rel="alternate" type="application/rss+xml" title="mwop.net RSS Feed for php">
+    <!-- Feeds -->
+    <link href="/blog/tag/tailwind/rss.xml" rel="alternate" type="application/rss+xml" title="mwop.net RSS Feed for tailwind">
+    <link href="/blog/tag/tailwind/atom.xml" rel="alternate" type="application/rss+xml" title="mwop.net RSS Feed for tailwind">
+    <!-- Feeds -->
+    <link href="/blog/tag/tailwindcss/rss.xml" rel="alternate" type="application/rss+xml" title="mwop.net RSS Feed for tailwindcss">
+    <link href="/blog/tag/tailwindcss/atom.xml" rel="alternate" type="application/rss+xml" title="mwop.net RSS Feed for tailwindcss">
+
+  <meta name="ocs-site-verification" content="c4b02f596a79a562778389766296d956" />
+  <script src="/assets/js/site.min.js?v=20240823T083328"></script>
+</head>
+<body hx-boost="true" hx-ext="head-support">
+<nav class="topnav" role="navigation">
+  <div class="navcontainer">
+    <div class="navrow">
+      <div class="navitems">
+        <div>
+          <a class="brand" href="/">
+            <img src="/images/logo.gif" alt="Celtic Knot - Matthew Weier O'Phinney" />
+            <span class="site-short-name">mwop.net</span>
+            <span class="site-long-name">matthew weier o'phinney</span>
+          </a>
+        </div>
+
+        <div class="navlist">
+          <a class="navlink" href="/blog/">Blog</a>
+          <a class="navlink" href="/art/">Art</a>
+          <a class="navlink" href="/contact/">Contact</a>
+        </div>
+      </div>
+
+      <div class="search-container">
+        <form action="/search" method="GET" class="search">
+            <input
+                name="q"
+                type="search"
+                class="text-input"
+                placeholder="Search..."
+                value=""
+                aria-label="Search"
+                hx-get="/search"
+                hx-trigger="input changed delay:500ms"
+                hx-target="#search-results"
+                hx-swap="outerHTML"
+            >
+        </form>
+      </div>
+
+      <div class="menu-container">
+        <button class="mobile-menu-button" onclick="document.querySelector('.mobile-menu').classList.toggle('hidden');">
+          <svg class="icon"
+            x-show="!showMenu"
+            fill="none"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- mobile menu -->
+  <div class="mobile-menu hidden">
+    <a href="/blog/">Blog</a>
+    <a href="/art/">Art</a>
+    <a href="/resume">R&eacute;sum&eacute;</a>
+    <a href="/contact/">Contact</a>
+    <form action="/search" method="GET" class="search block flex-col">
+        <input
+            name="q"
+            type="search"
+            class="text-input"
+            placeholder="Search..."
+            aria-label="Search"
+            hx-get="/search"
+            hx-trigger="input changed delay:500ms"
+            hx-target="#search-results"
+            hx-swap="outerHTML"
+        >
+    </form>
+  </div>
+</nav>
+
+<div id="search-results" class="hidden"></div>
+
+<div class="layout-large"><div class="main">
+<div class="blog entry h-entry">
+    <article>
+                    <section class="title-image">
+            <img src="/images/tailwindcss.svg" alt="TailwindCSS" loading="lazy">
+            <h2 class="p-name"><a class="u-url u-uid" href="/blog/2022-04-26-tailwind.html">TailwindCSS Tips</a></h2>
+        </section>
+    
+        <div class="e-content">
+        <p>I've been dabbling in CSS my entire career.
+In the early days, it was relatively simple, as our browsers were fairly limited.
+But over the years, CSS has become more and more capable, allowing styles to target only tags with specific tag attributes, only apply at specific screen sizes, and even perform complex layouts using things like flexbox and grid.
+I take a bit of time every now and then to understand these things... but since I don't use CSS a ton, it's hard to keep up.</p>
+<p>As such, over the past decade, I've tended to use CSS frameworks, and generally <a href="https://getbootstrap.com">Bootstrap</a>.
+Every couple years, a new major version is dropped, and I have to learn new structures and components, and struggle to get things to look the way I want.
+Worse, when I use these frameworks, injecting custom CSS often means understanding how the framework is already styling components so I can ensure things don't conflict.</p>
+<p>The last couple years, I've been keeping an eye on <a href="https://tailwindcss.com/">TailwindCSS</a>.
+I've been a bit skeptical, as its declarative, utility-first approach looks a lot like doing CSS <em>inside</em> your HTML, which, honestly, feels off.
+I've typically subscribed to the idea of <a href="https://en.wikipedia.org/wiki/Semantic_HTML">semantic HTML</a>, which advocates separating style from markup.
+Having styles directly that mimic CSS directives associated with every tag feels like an unholy mix, and a far cry from semantic HTML.</p>
+<p>And then there's the hype.
+The original author and project lead of Tailwind is a huge hype man, and hype tends to turn me off.
+That's on me, not them, but having been in the business for over two decades, I'm finding I'm more and more likely to discount hyped products and projects, because I've seen them come and go so frequently; there's often an indirect relationship between the amount of hype and the long-term viability of a project.
+I've also often observed that hype serves as a way for users to deflect reasonable critique, and the more vehement the user base, the less interested I am in engaging with them because of this.
+Clearly, YMMV, but it was definitely something keeping me from really investigating Tailwind.</p>
+<p>However, recently, in helping out <a href="https://opencollective.com/phpfoundation">the PHP Foundation</a>, I volunteered to setup their static website, and the team requested using TailwindCSS, so I dove in.</p>
+<p>And I discovered... I kind of love it.</p>
+<p>This is one of those &quot;I'll be googling this in the future&quot; posts.</p>
+
+        <h4>How it works</h4>
+<p>I won't go into how to get started with Tailwind; their docs do a great job of doing that for you.
+However, I will give a quick overview of how things work, so you can see (a) where I'm coming from, and (b) what you'll be doing when you start with Tailwind.</p>
+<p>The way I've always learned to do CSS is to first write HTML, and then write CSS to style that HTML the way you want it to appear.</p>
+<pre><code class="language-html hljs xml" data-lang="html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"box"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>Title<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Some content<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="css">
+<span class="hljs-selector-class">.box</span> {
+  <span class="hljs-attribute">margin</span>: <span class="hljs-number">0.5rem</span>;
+  <span class="hljs-attribute">background-color</span>: <span class="hljs-number">#333333</span>;
+  <span class="hljs-attribute">border</span>: <span class="hljs-number">#000000</span>
+  padding: <span class="hljs-number">0.5rem</span>;
+}
+
+<span class="hljs-selector-class">.box</span> <span class="hljs-selector-tag">h2</span> {
+  <span class="hljs-attribute">background-color</span>: <span class="hljs-number">#dedede</span>;
+  <span class="hljs-attribute">padding</span>: <span class="hljs-number">0.5rem</span>;
+  <span class="hljs-attribute">color</span>: <span class="hljs-number">#111111</span>;
+  <span class="hljs-attribute">font-size</span>: <span class="hljs-number">2rem</span>;
+  <span class="hljs-attribute">min-width</span>: max-content;
+}
+
+<span class="hljs-selector-class">.box</span> <span class="hljs-selector-tag">p</span> {
+  <span class="hljs-attribute">padding</span>: <span class="hljs-number">0.5rem</span>;
+  <span class="hljs-attribute">font-size</span>: <span class="hljs-number">1.2rem</span>;
+  <span class="hljs-attribute">min-width</span>: max-content;
+}
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span>
+</code></pre>
+<p>Tailwind instead provides a ton of &quot;utility&quot; classes, targetting just about every CSS directive.
+You then add these HTML classes to elements to style them:</p>
+<pre><code class="language-html hljs xml" data-lang="html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"m-2 p-2 bg-neutral-600 border-black"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">h2</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"min-w-full p-2 bg-neutral-300 text-4xl text-neutral-800"</span>&gt;</span>Title<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"min-w-full p-2 text-xl"</span>&gt;</span>Some content<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</code></pre>
+<p>Behind the scenes, you run the Tailwind CLI tool, and it analyzes your HTML to generate CSS for you.
+You can even have it watching for filesystem changes to files you're interested in (templates, JS scripts, etc.), and it will regenerate the CSS automatically.</p>
+<h4>Tip 1: Layers</h4>
+<p>Out of the box, Tailwind does a CSS reset that removes <strong>all</strong> styles.
+This is great, because it means that any changes you make, you can anticipate exactly what will hapen.
+It's also a pain in the ass, because everything is unstyled: your headings look just like your paragraphs, your lists look just like your paragraphs, and there's no way to tell where one paragraph ends and another begins.</p>
+<p>So, the first thing you'll want to do is define your base styles.
+Tailwind has a very specific suggestion for where and how to do this: in the &quot;base&quot; layer.</p>
+<p>Opening your site CSS file, you'll see these directives when you begin:</p>
+<pre><code class="language-css hljs css" data-lang="css"><span class="hljs-keyword">@tailwind</span> base;
+<span class="hljs-keyword">@tailwind</span> components;
+<span class="hljs-keyword">@tailwind</span> utilities;
+</code></pre>
+<p>Each of these is a Tailwind &quot;layer&quot;.
+Tailwind defines these to allow grouping items based on how they are normally used, and defining styles in these layers allows (a) the ability to override them with other utility classes, and (b) the ability to strip them from the CSS file if they are never used in your application.</p>
+<p>The &quot;base&quot; layer is the one that should be used for your base styles, the ones that a CSS reset usually touches, such as paragraphs, headings, links, lists, etc.</p>
+<p>Within your declarations, you can use a directive called <code>@apply</code>.
+This allows you to use the same utility &quot;classes&quot; you'd use in your HTML markup, which means you end up using the same language everywhere when creating your design.
+So, as an example:</p>
+<pre><code class="language-css hljs css" data-lang="css"><span class="hljs-keyword">@layer</span> base {
+    <span class="hljs-selector-tag">html</span> {
+        @apply font-serif;
+    }
+
+    <span class="hljs-selector-tag">p</span> {
+        @apply mb-4 leading-relaxed tracking-wide;
+    }
+
+    <span class="hljs-selector-tag">a</span> {
+        @apply underline decoration-1 decoration-dotted transition duration-300;
+    }
+
+    <span class="hljs-selector-tag">a</span><span class="hljs-selector-pseudo">:hover</span> {
+        @apply font-semibold decoration-solid;
+    }
+
+    <span class="hljs-selector-tag">h1</span>, <span class="hljs-selector-tag">h2</span>, <span class="hljs-selector-tag">h3</span>, <span class="hljs-selector-tag">h4</span>, <span class="hljs-selector-tag">h5</span>, <span class="hljs-selector-tag">h6</span> {
+        @apply font-sans;
+    }
+
+    <span class="hljs-selector-tag">h1</span> {
+        @apply font-bold text-8xl mb-2;
+    }
+
+    <span class="hljs-comment">/* and so on */</span>
+}
+</code></pre>
+<p>As your project matures, you may notice that there are certain styles you are using and repeating everywhere, and they are getting untenable to remember and type consistently.
+For me, these were things like buttons and form input.
+Styles like these go into your &quot;components&quot; layer:</p>
+<pre><code class="language-css hljs css" data-lang="css"><span class="hljs-keyword">@layer</span> components {
+    <span class="hljs-selector-class">.btn</span> {
+        @apply rounded p-2 bg-action-bg border-action-border text-site-bg <span class="hljs-attribute">hover</span>:bg-action-active active:bg-action-active active:text-site-bg transition duration-<span class="hljs-number">300</span>
+    }
+
+    <span class="hljs-selector-class">.text-input</span> {
+        @apply w-full mb-4 border-site-bg p-2 rounded bg-site-fg text-site-bg;
+    }
+
+    <span class="hljs-selector-class">.label</span> {
+        @apply block mb-2 font-semibold;
+    }
+
+    <span class="hljs-selector-class">.textarea</span> {
+        @apply w-full mb-4 border-site-bg p-2 rounded-lg bg-site-fg text-site-bg;
+    }
+}
+</code></pre>
+<p>Adding those allows me to use more succinct classes:</p>
+<pre><code class="language-html hljs xml" data-lang="html"><span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"label"</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"email"</span>&gt;</span>Email address<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"text-input"</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"email"</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"email"</span> /&gt;</span>
+</code></pre>
+<blockquote>
+<h4>Classes only!</h4>
+<p>The &quot;components&quot; layer allows class definitions only!
+The documentation mentions this in passing, but my immediate assumption was that I could use any CSS selector within the components layer.
+What I found was that specifying element types (e.g. <code>label</code> or <code>input[type=&quot;text&quot;], input[type=&quot;email&quot;]</code>) did not work; no styles were generated.
+Once I switched to creating CSS class definitions only, everything worked.</p>
+<p>I'm sure somebody will point out I am wrong and/or detail how to do it correctly; until then, this was what worked.</p>
+</blockquote>
+<p>Sometimes, however, using layers doesn't work.</p>
+<p>When?</p>
+<p>Typically, when the content is being generated.
+The two times I ran into problems:</p>
+<ul>
+<li>I have content that I generate via either cronjob or webhook, and the HTML is not in any source file I can rely on when running Tailwind.</li>
+<li>I have other content being generated on-the-fly via JavaScript, and these are generating just regular HTML tags.</li>
+</ul>
+<p>For these, you <strong>create declarations outside all layers</strong>.
+Doing so ensures that Tailwind <strong>always</strong> includes the definitions in the generated CSS, regardless of whether or not it found any markup with them.</p>
+<p>Luckily, you can continue to use <code>@apply</code> even with these.
+And, better, you can use any CSS selectors you want, which allows you to be as specific as you need.</p>
+<h4>Tip <a href="/search?q=tag:2">#2</a> Use a preprocessor</h4>
+<p>I often have 3rd party CSS I want to include, with <a href="https://prismjs.com">PrismJS</a> and <a href="https://fontawesome.com">FontAwesome</a> being typical examples.
+With normal CSS or even a preprocessor, I can use <code>@import</code> to slurp them in, but Tailwind doesn't know how to do this on its own (and, honestly, shouldn't).
+Additionally, minimizing CSS is a great way to get a small performance boost, as it ensures smaller file sizes for your browser to fetch.</p>
+<p>Fortunately, you can use Tailwind with preprocessors as well, and the documentation <a href="https://tailwindcss.com/docs/using-with-preprocessors">details configuration with a variety of them</a>.</p>
+<p>I ended up going with PostCSS, as it has very few dependencies, and is trivial to setup.
+However, in doing so, I couldn't just use the Tailwind CLI to watch my CSS anymore, and needed to setup additional tooling.</p>
+<p>The results were not difficult to achieve.
+I installed PostCSS locally, as well as the PostCSS CLI tool globally.
+I also installed the postcss-import plugin, autoprefixer, and cssnano.
+My <code>postcss.config.js</code> ended up like this:</p>
+<pre><code class="language-javascript hljs javascript" data-lang="javascript"><span class="hljs-built_in">module</span>.exports = {
+  <span class="hljs-attr">plugins</span>: {
+    <span class="hljs-string">'postcss-import'</span>: {},
+    <span class="hljs-attr">tailwindcss</span>: {},
+    <span class="hljs-attr">autoprefixer</span>: {},
+    ...(process.env.IS_PROD ? { <span class="hljs-attr">cssnano</span>: {} } : {})
+  }
+}
+</code></pre>
+<p>From there, I installed chokidar-cli, and added the following script definitions to my <code>package.json</code>:</p>
+<pre><code class="language-json hljs json" data-lang="json"><span class="hljs-string">"scripts"</span>: {
+  <span class="hljs-attr">"dev:css"</span>: <span class="hljs-string">"postcss css/site.css -o dist/css/site.css"</span>,
+  <span class="hljs-attr">"watch"</span>: <span class="hljs-string">"npx chokidar \"./css/*.css\" \"../templates/**/*.phtml\" \"../src/**/*.phtml\" -c \"npm run dev:css\""</span>
+}
+</code></pre>
+<p>This allows me to run <code>npm run watch</code> when I'm actively updating markup and stylesheets in order to generate my CSS.</p>
+<h4>Results</h4>
+<p>The results were pretty astonishing for me.</p>
+<ul>
+<li>I was able to reduce my CSS by 50%.</li>
+<li>I was able to reduce my JS from around 10k to less than 1k, as I was able to remove jQuery and the Bootstrap JS entirely.</li>
+<li>I also reduced the overall size of my templates, which suprised me, as I was producing far more HTML classes; the flip side of that was I was able to reduce the amount of markup I was actually using (more on that below).</li>
+</ul>
+<h4>Pros and Cons</h4>
+<p>I'm going to start with the cons, because, honestly, I can live with them, particularly when I consider the benefits.</p>
+<h5>The Cons</h5>
+<p><strong>First</strong>, there are So. Many. Classes. On. Every. Element.</p>
+<p>I mean, this is not entirely uncommon:</p>
+<pre><code class="language-html hljs xml" data-lang="html"><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"block border-t border-mwop-light border-dotted px-2 py-4 no-underline text-sm font-semibold text-mwop-light transition duration-300 hover:bg-mwop-fg hover:text-mwop-bg"</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"&lt;?= $this-&gt;url('blog') ?&gt;"</span>&gt;</span>Blog<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+</code></pre>
+<p>Yes, it perfectly describes how the link should act, both in normal and hover states, but sheesh.</p>
+<p><strong>Second</strong>, I still needed a stylesheet, because Tailwind has a very comprehensive reset that strips all base styles off EVERYTHING.
+Every. Thing.</p>
+<p>When you first start out, when you view through a browser, you cannot distinguish one type of content from another.
+It all blends together.</p>
+<p>So I have a stylesheet defining my base styles, so that things like paragraphs and headings and list items at least have some default layout and styling.
+In the end, this is a net &quot;meh&quot;; I kind of assume I should have base styling anyways, and at least I know <em>exactly</em> how things are styled initially, instead of having to compensate for how different browsers define the base styles.
+It's just a bit disconcerting at first.</p>
+<p><strong>Third</strong>, I found myself repeating certain combinations all over the place.
+This really irks the part of me that likes to adhere to the <a href="https://en.wikipedia.org/wiki/Don%27t_repeat_yourself">DRY principle</a>, as this sort of repetition can lead to disconnect later when I make a change in one place, and forget the umpteen other places I'd used that combination.
+On the flip side, this is exactly what the component layer is about, and I found once I'd decided I liked a particular element styling, I'd create a component style that uses <code>@apply</code> to recreate it, and this would allow me to re-use the style everywhere else.
+But, you know... that also takes away from the base core principle of Tailwind, which is to avoid that at all cost.</p>
+<p><strong>Fourth</strong>, I find it kind of crazy that you have to have your templates available to build your CSS.
+I've been doing multi-stage Docker builds for some time now, and generally build assets in one stage, to copy into the final production container.
+Previously, this could be done in a minimal way (copying just the asset directory to the intermediary container), but now I have to copy in a bunch of other items in the tree to ensure CSS builds.
+It's fine, but it feels like an antipattern.
+I could likely build and commit the assets when I need to regenerate them, but then I need to worry about accidentally pushing a dev build versus a production build, and I want to avoid that as much as possible.</p>
+<h5>The pros</h5>
+<p>With the cons out of the way, I'll turn to what I liked.</p>
+<p>First, it was much easier to prototype changes, particularly once I learned the mnemonics for the various utility classes and sizing.
+I would consider what I wanted an element to look like, start typing away, save, refresh the page, and see the results immediately.</p>
+<p>Second, I was surprised immediately that my production builds were approximately 50% less CSS in the end.
+Tailwind does some intelligent optimizations to only include the classes you actually use, which reduces the CSS size dramatically.</p>
+<p>Third, because of the utility classes, I was able to mix together styles for multiple screen sizes, which meant I was able to get rid of most of the JS I was using.
+I ended up only needing JS for toggling mobile navigation and for displaying search results, and both of these were trivial to write in vanilla Javascript.
+I was able to get rid of jQuery entirely, as well as the Bootstrap JS.</p>
+<p>This leads to my fourth point: I have far fewer dependencies in my asset build chain, and zero that have security vulnerabilities now.
+Previously, I was using Gulp to build my CSS and JS, and was using SASS as a pre-processor; it was a ridiculous amount of dependencies, and I <em>always</em> had multiple items installed as sub-dependencies that Dependabot was flagging with security vulnerabilities.
+I was able to ditch Gulp entirely.
+My CSS is built using PostCSS and Tailwind; my JS is too small to need dedicated build tools, and I can thus use a very plain <code>Makefile</code> to create my production assets.</p>
+<p>Fifth, I was pleasantly surprised when I was able to move to <strong>better</strong> semantic HTML structure.
+Bootstrap is essentially &quot;div soup&quot;, utilizing different combinations of divs to achieve layout; with Tailwind, I was able to revert to semantic HTML to achieve these same effects.
+Yes, I have some ridiculously long HTML element class declarations, but the actual HTML <strong>structure</strong> is minimal.
+I estimate I reduced overall HTML structure by around 30%.</p>
+<p>Sixth, I (typically — see above comments about adding base styles and creating components to reduce repetition) no longer needed to look up a style in the stylesheet to understand how an element would look.
+The class declarations serve as a shorthand.
+It was much easier to iterate as a result.</p>
+<p>Seventh, I found I was learning, applying, and understanding CSS, particularly complex things like flexbox and positioning, better than I have in the past, largely because I was applying it directly on the structures.</p>
+<p>Which leads to my eighth and last point: even with CSS frameworks like Bootstrap, I've struggled to have decent responsive design.
+I'm well aware that folks view my site on a variety of devices (heck, I go from desktop to tablet to phone several times a day myself); a responsive design that is readable is absolutely critical in today's world.
+While Bootstrap has responsive breakpoints, I always struggled to understand how they applied and when, and often got things wrong.
+Tailwind's documentation does a fabulous job of detailing what the breakpoints are, and, more importantly, provides examples on how to combine different breakpoints with CSS classes to achieve your designs.
+I had portions of my site I never fully made responsive under Bootstrap that I was able to get working beautifully with very little effort with Tailwind.
+Even more important: it's trivially easy to define your own breakpoints if you want — though I really do not think I'll ever need to.</p>
+<h4>Parting notes</h4>
+<p>In the end, I found myself quite happy with the change.</p>
+<p>I had a realization during the process as well: with CSS frameworks like Bootstrap... I was being left with a a lot of terribly <em>unsemantic</em> markup, despite the fact that I explicitly prefer semantic HTML.
+I was able to recreate the styles I'd previously had... and then, miraculously, start improving on and polishing them — which I'd largely not done before due to the need to battle with pre-conceived components in Bootstrap.
+Being able to be fully free of these structures means more freedom to experiment and play with other layouts and design options, as I'm not locked into a specific design framework.</p>
+<p>So, hat's off to Tailwind.
+Well done!</p>
+        </div>
+
+        <div class="hidden p-author h-card">
+                Posted by <a class="p-name u-url" href="https://mwop.net">Matthew Weier O'Phinney</a>,
+                <img class="u-photo photo" width="50" src="https://avatars0.githubusercontent.com/u/25943?v=3&u=79dd2ea1d4d8855944715d09ee4c86215027fa80&s=140"" alt="matthew">
+        </div>
+
+        <p class="socials">
+            <a href="https://www.facebook.com/sharer.php?u=/blog/2022-04-26-tailwind.html"><i class="fa-brands fa-facebook fa-2xl"></i></a>
+            <a href="https://www.linkedin.com/shareArticle?mini=true&url=/blog/2022-04-26-tailwind.html"><i class="fa-brands fa-linkedin fa-2xl"></i></a>
+        </p>
+    </article>
+
+    <aside>
+        <p>
+            Written on <time class="dt-published" datetime="2022-04-26T14:15:00-05:00">26 April 2022</time>.
+                        <br />Last updated on <time class="dt-updated" datetime="2022-04-26T14:15:00-05:00">26 April 2022</time>.
+                    </p>
+
+        <ul class="tags">
+                    <li><a class="p-category" href="/blog/tag/css">css</a>
+                    <li><a class="p-category" href="/blog/tag/php">php</a>
+                    <li><a class="p-category" href="/blog/tag/tailwind">tailwind</a>
+                    <li><a class="p-category" href="/blog/tag/tailwindcss">tailwindcss</a>
+                </ul>
+
+            <p>
+            Image by <a href="https://tailwindcss.com">Tailwind Labs Inc.</a>,
+            licensed under <a href="https://tailwindcss.com/brand">PROPRIETARY</a>
+        </p>
+        </aside>
+</div>
+</div></div>
+<footer>
+  <div class="container">
+    <section>
+      <h4>About</h4>
+      <p>
+    I'm a husband, a father of two, web architect by day, and artist by night.
+</p>
+
+<ul class="font-sans">
+    <li><a href="/now">What I'm doing now</a></li>
+    <li><a href="/resume">Resume</a></li>
+    <li><a rel="me" href="https://phpc.social/@mwop">Fediverse (@matthew@mwop.net)</a></li>
+    <li><a href="https://instagram.com/phlytangle">Instagram (@phlytangle)</a></li>
+    <li><a href="https://github.com/weierophinney">GitHub (@weierophinney)</a></li>
+    <li><a hx-disable="true" href="/blog/rss.xml"><i class="fa-solid fa-rss"></i> RSS</a></li>
+</ul>
+
+    </section>
+
+    <section>
+      <h4>Projects</h4>
+      <ul class="font-sans">
+    <li><a href="https://docs.mezzio.dev/">Mezzio</a> (formerly Expressive; PSR-15 middleware framework)</li>
+        <li><a href="https://docs.laminas.dev/">Laminas Project</a> (formerly Zend Framework; component library and MVC framework)</li>
+    <li><a href="https://docs.laminas.dev/laminas-stratigility/">Stratigility</a> (PSR-15 middleware for PHP)</li>
+    <li><a href="https://docs.laminas.dev/laminas-diactoros/">Diactoros</a> (PSR-7 HTTP messages and PSR-17 HTTP message factories for PHP)</li>
+    <li><a href="https://github.com/phly/keep-a-changelog">Keep-A-Changelog CLI tooling</a></li>
+        </ul>
+
+    </section>
+
+    <section>
+          <div hx-get="/api/tag-cloud" hx-trigger="revealed" hx-target="this" hx-swap="outerHTML"></div>
+        </section>
+  </div>
+
+  <div class="copyright">
+    <div>
+      Unless otherwise noted, &#169; Matthew Weier O'Phinney
+    </div>
+  </div>
+</footer>
+<script>
+(function() {
+    bindKeyboardShortcuts();
+})();
+</script>
+</body>
+</html>
