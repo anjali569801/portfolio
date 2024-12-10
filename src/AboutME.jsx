@@ -13,7 +13,7 @@ function AboutME({setKnowMore}) {
     <div id='AboutME' className=' flex flex-col space-y-10   md:mx-auto text-center  p-10 md:space-x-24 items-center md:flex-row md:space-y-2 font-serif'>
 
           <div className='border-4 border-secondary p-5 rounded-full hover:scale-110 ease-in shadow-lg shadow-secondary sixe-52 shrink-0'>
-          <img src="src\profilePic.jpeg" alt="photo" className='size-52 border border-secondary object-cover  rounded-full '/>
+          <img src="public\profilePic.jpeg" alt="photo" className='size-52 border border-secondary object-cover  rounded-full '/>
 
           </div>
         <div className=' sm:flex flex-col items-center md:items-start space-y-5  animate-hue-rotate'>
