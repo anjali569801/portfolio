@@ -14,7 +14,7 @@ function KnowMore({setKnowMore}) {
     <div className='mt-5 flex flex-col space-y-10  text-center  p-10 md:space-x-24 mx-[-150px] items-center md:flex-row md:space-y-2 font-serif'>
         
         <div className='border-4 border-secondary p-5 rounded-full hover:scale-110 ease-in shadow-lg shadow-secondary sixe-52 shrink-0 bg-gradient-to-r from-stop1 to-stop2'>
-          <img src="src\assets\profilePic.jpeg" alt="photo" className=' size-52 border border-secondary  rounded-full object-cover ' />
+          <img src="profilePic.jpeg" alt="photo" className=' size-52 border border-secondary  rounded-full object-cover ' />
 
           </div>
        <p className='text-left text-lg mx-28 animate-hue-rotate'>I'm a passionate and dedicated Frontend Developer with a solid foundation in HTML, CSS, Tailwind CSS, React JS, HTML, MongoDB, and JavaScript. I've recently completed a 6-month training program at Codeyogi, where I honed my skills and gained practical experience through hands-on projects.
